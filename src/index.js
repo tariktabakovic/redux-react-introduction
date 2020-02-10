@@ -21,6 +21,7 @@ import {
     createStore
 } from 'redux';
 
+// THESE ARE WHAT YOU WANT TO PUT IN YOUR ACTION FUNCTIONS EVENTUALLY
 // {
 //     amounts: [0];
 // }
@@ -37,10 +38,11 @@ import {
 // create your action types as constants, so that you get error messages for typos
 const INCREMENT = 'INCREMENT';
 const DECREMENT = 'DECREMENT';
-
+const ADD_COUNTER = 'ADD_COUNTER';
+// const DEL_COUNTER = 'DEL_COUNTER';
 
 // Write action creator functions. They format your action objects. Again,
-// to avoid typos. 
+// to avoid typos. THESE ARE ACTIONS BELOW
 function actionIncrement(id){
     return {
         type: INCREMENT,
@@ -56,6 +58,13 @@ function actionDecrement(id){
 // ^ Give default value to howMuch so that if there isn't anything passed to function 
 // when called, it uses 1. 
 
+function addCounter(){
+    return {
+        type: ADD_COUNTER
+    }
+}
+
+
 
 // The Teller - reducer function 
 // reducers are always named for the state they manage. they always recieve 
@@ -65,24 +74,29 @@ const defaultState= {amount: [0, 2, 4, 5, 6]};
 function counter(state= defaultState, action){
     // console.table(action);
     const newState= {...state};
-    // switch(action.type){
-    //     case INCREMENT:
-    //         newState.amount = state.amount + action.amount;
-    //         break;
-    //     case DECREMENT:
-    //         newState.amount = state.amount - action.amount;
-    //         break;
-    //     default:
-    //         break;
-    // }
-    if (action.type === 'INCREMENT'){
-        newState.amount[action.id] = state.amount[action.id] + action.amount;
-    } else if (action.type ==='DECREMENT'){
-        newState.amount[action.id] = state.amount[action.id] - action.amount;
-    } else {
-        // no need to do anything here. we already made a copy of state to return.
+    switch(action.type){
+        case INCREMENT:
+            newState.amount[action.id] = state.amount[action.id] + action.amount;
+            break;
+        case DECREMENT:
+            newState.amount[action.id] = state.amount[action.id] - action.amount;
+            break;
+        case ADD_COUNTER:
+            newState.amount.push(0);
+            break;
+        // case DEL_COUNTER:
+        //     newState.amount.reduce
+        //     break;
+        default:
+            break;
     }
-    
+    // if (action.type === 'INCREMENT'){
+    //     newState.amount[action.id] = state.amount[action.id] + action.amount;
+    // } else if (action.type ==='DECREMENT'){
+    //     newState.amount[action.id] = state.amount[action.id] - action.amount;
+    // } else {
+        // no need to do anything here. we already made a copy of state to return.
+    // }
     // They must return the new version of state  
     return newState;
 }
@@ -103,6 +117,10 @@ store.subscribe(()=>{
 store.dispatch(actionIncrement(0));
 store.dispatch(actionIncrement(1));
 store.dispatch(actionDecrement(3));
+store.dispatch(addCounter());
+store.dispatch(addCounter());
+store.dispatch(addCounter());
+store.dispatch(addCounter());
 
 
 // import React from 'react';
