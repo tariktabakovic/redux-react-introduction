@@ -20,19 +20,55 @@
 import {
     createStore
 } from 'redux';
+
+// create your action types as constants, so that you get error messages for typos
+const INCREMENT = 'INCREMENT';
+const DECREMENT = 'DECREMENT';
+
+// Write action creator functions. They format your action objects. Again,
+// to avoid typos. 
+function actionIncrement(howMuch=1){
+    return {
+        type: INCREMENT,
+        amount: howMuch
+    } 
+}
+function actionDecrement(howMuch=1){
+    return {
+        type: DECREMENT,
+        amount: howMuch
+    }
+}
+// ^ Give default value to howMuch so that if there isn't anything passed to function 
+// when called, it uses 1. 
+
+
 // The Teller - reducer function 
 // reducers are always named for the state they manage. they always recieve 
 // the current state and the action they're processin. 
-function counter(state= { amount: 100 }, action){
-    console.table(action);
+
+const defaultState= {amount: 100}
+function counter(state= defaultState, action){
+    // console.table(action);
     const newState= {...state};
-    if (action.type === 'INCREMENT'){
-        newState.amount = state.amount + 1;
-    } else if (action.type ==='DECREMENT'){
-        newState.amount = state.amount - 1;
-    } else {
-        // no need to do anything here. we already made a copy of state to return.
+    switch(action.type){
+        case INCREMENT:
+            newState.amount = state.amount + action.amount;
+            break;
+        case DECREMENT:
+            newState.amount = state.amount - action.amount;
+            break;
+        default:
+            break;
     }
+    // if (action.type === 'INCREMENT'){
+    //     newState.amount = state.amount + action.amount;
+    // } else if (action.type ==='DECREMENT'){
+    //     newState.amount = state.amount - action.amount;
+    // } else {
+        // no need to do anything here. we already made a copy of state to return.
+    // }
+    
     // They must return the new version of state  
     return newState;
 }
@@ -42,15 +78,18 @@ function counter(state= { amount: 100 }, action){
 const store = createStore(counter);
 
 // Push Notifications - subscribe to changes in the store
+// Use subscribe to see changes
 store.subscribe(()=>{
     console.log(`The state is now:`);
+    console.table(store.getState());
 });
 
 // Lets give the store some actions to precess.
 // store.dispatch process the actions 
-store.dispatch({
-    type: 'INCREMENT'
-})
+store.dispatch(actionIncrement());
+store.dispatch(actionIncrement(5));
+store.dispatch(actionDecrement(99));
+
 
 
 
