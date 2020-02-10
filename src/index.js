@@ -23,7 +23,8 @@ import {
 // The Teller - reducer function 
 // reducers are always named for the state they manage. they always recieve 
 // the current state and the action they're processin. 
-function counter(state, action){
+function counter(state= { amount: 100 }, action){
+    console.table(action);
     const newState= {...state};
     if (action.type === 'INCREMENT'){
         newState.amount = state.amount + 1;
@@ -40,8 +41,16 @@ function counter(state, action){
 // The store is an object that manages your state using you reducer. 
 const store = createStore(counter);
 
-
 // Push Notifications - subscribe to changes in the store
+store.subscribe(()=>{
+    console.log(`The state is now:`);
+});
+
+// Lets give the store some actions to precess.
+// store.dispatch process the actions 
+store.dispatch({
+    type: 'INCREMENT'
+})
 
 
 
