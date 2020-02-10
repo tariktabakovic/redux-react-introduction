@@ -25,6 +25,9 @@ import {
 const INCREMENT = 'INCREMENT';
 const DECREMENT = 'DECREMENT';
 
+const ADD_COUNTER = 'ADD_COUNTER';
+const DEL_COUNTER = 'DEL_COUNTER';
+
 // Write action creator functions. They format your action objects. Again,
 // to avoid typos. 
 function actionIncrement(howMuch=1){
@@ -47,7 +50,7 @@ function actionDecrement(howMuch=1){
 // reducers are always named for the state they manage. they always recieve 
 // the current state and the action they're processin. 
 
-const defaultState= {amount: 100}
+const defaultState= {amount1: 100, amount2: 3};
 function counter(state= defaultState, action){
     // console.table(action);
     const newState= {...state};
@@ -75,7 +78,7 @@ function counter(state= defaultState, action){
 
 // You give it  a reducer, it gives you a 'store'.
 // The store is an object that manages your state using you reducer. 
-const store = createStore(counter);
+const store = createStore(counter, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
 
 // Push Notifications - subscribe to changes in the store
 // Use subscribe to see changes
@@ -89,9 +92,6 @@ store.subscribe(()=>{
 store.dispatch(actionIncrement());
 store.dispatch(actionIncrement(5));
 store.dispatch(actionDecrement(99));
-
-
-
 
 // import React from 'react';
 // import ReactDOM from 'react-dom';
