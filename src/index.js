@@ -39,7 +39,7 @@ import {
 const INCREMENT = 'INCREMENT';
 const DECREMENT = 'DECREMENT';
 const ADD_COUNTER = 'ADD_COUNTER';
-// const DEL_COUNTER = 'DEL_COUNTER';
+const DEL_COUNTER = 'DEL_COUNTER';
 
 // Write action creator functions. They format your action objects. Again,
 // to avoid typos. THESE ARE ACTIONS BELOW
@@ -64,7 +64,12 @@ function addCounter(){
     }
 }
 
-
+function delCounter(id){
+    return {
+        type: DEL_COUNTER,
+        id
+    }
+}
 
 // The Teller - reducer function 
 // reducers are always named for the state they manage. they always recieve 
@@ -84,9 +89,9 @@ function counter(state= defaultState, action){
         case ADD_COUNTER:
             newState.amount.push(0);
             break;
-        // case DEL_COUNTER:
-        //     newState.amount.reduce
-        //     break;
+        case DEL_COUNTER:
+            newState.amount.splice(action.id, 1)  
+            break;
         default:
             break;
     }
@@ -121,6 +126,7 @@ store.dispatch(addCounter());
 store.dispatch(addCounter());
 store.dispatch(addCounter());
 store.dispatch(addCounter());
+store.dispatch(delCounter());
 
 
 // import React from 'react';
