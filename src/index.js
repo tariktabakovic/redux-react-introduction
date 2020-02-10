@@ -36,10 +36,15 @@ import {
 // }
 
 // create your action types as constants, so that you get error messages for typos
+// CREATE
 const INCREMENT = 'INCREMENT';
+// UPDATE
 const DECREMENT = 'DECREMENT';
+// UPDATE
 const ADD_COUNTER = 'ADD_COUNTER';
+// DELETE
 const DEL_COUNTER = 'DEL_COUNTER';
+
 
 // Write action creator functions. They format your action objects. Again,
 // to avoid typos. THESE ARE ACTIONS BELOW
